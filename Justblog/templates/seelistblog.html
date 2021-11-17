@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+</header>
+<section>
+  <div class="container">
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Blog Title</th>
+      <th scope="col">Created at</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for blog in Bloglist %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{blog.title}}</td>
+      <td>{{blog.created_at}}</td>
+      <td>
+        <a href="seelistblog/{{blog.id}}/update" class="btn btn-success">Edit</a>
+        <a href="seelistblog/{{blog.id}}/delete" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+
+  </div>
+</section>
+
+{% endblock %}

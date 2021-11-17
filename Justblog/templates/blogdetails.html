@@ -1,0 +1,78 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <section class="hero-home dark-overlay mb-5"><img class="bg-image" src="{{blog.image.url}}" alt="">
+    </section>
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-8 col-lg-10 mx-auto">
+            <p class="py-3 mb-5 text-muted text-center font-weight-light"><a href="#"><img class="avatar mr-2" src="{{profile.profilepic.url}}" alt=""></a> Written by <a class="font-weight-bold" href="{{blog.id}}/profile">{{blog.user.first_name}} {{blog.user.last_name}}</a><span class="mx-1">|</span>{{blog.created_at}} <a class="font-weight-bold" href="blog.html"></a><span class="mx-1"></span><a class="text-muted" href="#"></a></p>
+            <h2><strong>{{blog.title}}</strong></h2>
+            <br>
+            <h3><strong>{{blog.subtitle}}</strong></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-10 mx-auto"><img class="img-fluid mb-5" src="" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col-xl-8 col-lg-10 mx-auto">
+            <div class="text-content">
+              <h4><strong>{{blog.blog_content}}</strong></h4>
+              <br>
+              <br>
+            </div>
+            <!-- comments-->
+            <div class="mt-5">
+              <h6 class="text-uppercase text-muted mb-4"></h6>
+
+
+              <!-- comment-->
+              {% for comment in comments %}
+                <h5> Comments </h5>
+                  <br>
+                <div class="media-body">
+                  <h5>{{comment.name}}</h5>
+                  <p class="text-uppercase text-sm text-muted"><i class="far fa-clock"></i>{{comment.created_at}}</p>
+                  <p class="text-muted">{{comment.comment}}</p>
+                  <p>(Rated {{comment.rating}} of 5 by {{comment.name}})</p>
+                  <!--<p><a class="btn btn-link text-primary" href="#"><i class="fa fa-reply"></i> Reply</a></p>-->
+                </div>
+                <br>
+              {% endfor %}
+              <!-- /comment-->
+            </div>
+            <br>
+            <br>
+
+            <!-- /comments-->
+            <!-- comment form-->
+            {% if user.is_authenticated %}
+            <div class="mb-5">
+                <h5 class="mb-4">Leave a comment</h5>
+                <form class="form" id="comment-form" method="post" action="{{blog.id}}">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        {% csrf_token %}
+                        {{forms.as_p}}
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="submit"><i class="far fa-comment"></i> Comment</button>
+                </form>
+              </div>
+            </div>
+            {% else %}
+            <p class="mb-4"> <a class="font-weight-bold" href="{% url 'login' %}">Leave a comment </a></p>
+            {% endif %}
+
+            <!-- /comment form-->
+          </div>
+    </section>
+</body>
+{% endblock %}
